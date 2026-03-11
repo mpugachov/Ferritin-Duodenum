@@ -1224,11 +1224,10 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       FerritinIronStorage ferritinIronStorage
         annotation (Placement(transformation(extent={{-52,-6},{4,50}})));
     equation
-      connect(Fe_total.y, ferritinIronStorage.Fe_total) annotation (Line(points
-            ={{-85,74},{-64,74},{-64,42.16},{-53.12,42.16}}, color={0,0,127}));
+      connect(Fe_total.y, ferritinIronStorage.Fe_total_set) annotation (Line(
+            points={{-85,74},{-72,74},{-72,41.6},{-53.68,41.6}}, color={0,0,127}));
       connect(FT_cage.y, ferritinIronStorage.FT_cage_in) annotation (Line(
-            points={{-85,-40},{-62,-40},{-62,11.36},{-52,11.36}}, color={0,0,
-              127}));
+            points={{-85,-40},{-72,-40},{-72,9.4},{-53.96,9.4}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Test_FT_storage;
