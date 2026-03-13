@@ -1096,7 +1096,6 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       type MolarReactionRate = Real(
       unit = "mol/(m3.s)",
       displayUnit = "mmol/(l.s)");
-
       parameter Integer H = 4 "H subunits";
       parameter Integer L = 24 - H "L subunits";
 
@@ -1105,7 +1104,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
 
       parameter Bodylight.Types.Frequency k_FTlysis = 1.203e-05;
 
-      parameter MolarReactionRate FT_Expression = 16.015e-14 * 1000;
+      BodylightExtension.Types.MolarReactionRate FT_Expression( start = 16.015e-14 * 1000);
 
     /*    
     parameter Real FT_Expression(
@@ -1114,7 +1113,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
      displayUnit = "mol/(l.s)")
     
     = 16.015e-14 * 1000;
-    */
+ */
 
       //FT degradation
       Real FT_Degradation(
@@ -1172,10 +1171,14 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       parameter Integer n_mineralization = 4 "Hill coefficient";
       parameter Integer m_mineralization = 8 "Hill coefficient";
 
+      BodylightExtension.Types.RealIO.MolarReactionRateInput Ft_expressionIn
+        annotation (Placement(transformation(extent={{-258,-42},{-218,-2}}),
+            iconTransformation(extent={{-120,-12},{-94,14}})));
     initial equation
       FT_cage = FT_cage_in;
 
     equation
+      FT_Expression = 16.015e-14 * 1000;
 
       Fe_in_FT = core + DFP;
       Fe_total = Fe_in_FT + LIP;
@@ -1227,7 +1230,11 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
             Text(
               extent={{-22,-70},{-88,-18}},
               textColor={28,108,200},
-              textString="Ft_cage_in")}));
+              textString="Ft_cage_in"),
+            Text(
+              extent={{-24,-24},{-88,30}},
+              textColor={28,108,200},
+              textString="Ft_expression_in")}));
     end FerritinIronStorage;
 
     model Test_FT_storage
