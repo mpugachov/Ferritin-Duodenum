@@ -1119,11 +1119,13 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
     = 16.015e-14 * 1000;
  */
 
-      //FT degradation
-      Real FT_Degradation(
-        quantity = "ReactionRate",
-        unit = "mol/(m3.s)",
-        displayUnit = "mol/(l.s)");
+     /*  
+  //FT degradation
+  Real FT_Degradation(
+    quantity = "ReactionRate",
+    unit = "mol/(m3.s)",
+    displayUnit = "mol/(l.s)");
+ */
 
       //FT degradation core release
       Real CoreRelease(
@@ -1206,7 +1208,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
 
       atoms_per_cage_transient = core / FT_cage;
 
-      FT_Degradation = k_FTlysis * FT_cage;
+      //FT_Degradation = k_FTlysis * FT_cage;
 
       CoreRelease = k_FTlysis * core;
 
