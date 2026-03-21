@@ -1090,7 +1090,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
             transformation(extent={{-248,-26},{-228,-6}}), iconTransformation(
           extent={{102,-64},{122,-44}})));
       Bodylight.Types.Concentration Fe_total;
-      //Bodylight.Types.Concentration Fe_total_need;
+      Bodylight.Types.Concentration Fe_total_need=Fe_total_set - Fe_total;
 
       Bodylight.Types.Concentration core(
         start = 7.5e-06 * 1e3) "core";
@@ -1107,6 +1107,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       parameter Integer rO = 2;
 
       parameter Bodylight.Types.Frequency k_FTlysis = 1.203e-05;
+      parameter Bodylight.Types.Frequency k_Fe_total_set_achieve_time=1e-2;
 
      // BodylightExtension.Types.MolarReactionRate FT_Expression( start = 16.015e-14 * 1000);
 
@@ -1193,7 +1194,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
      // FT_cage = FT_cage_norm;
 
       //Fe_total_need = Fe_total_set - Fe_total;
-      LIP = Fe_total_set - (core + DFP);
+      //LIP = Fe_total_set - (core + DFP);
 
     equation
       //FT_Expression = 16.015e-14 * 1000;
@@ -1227,9 +1228,15 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       //der(FT_cage) = -FT_Degradation + FT_Expression;
       //-FT_Degradation + FT_Expression=0;
 
-      der(LIP) = -2 * Oxidation + 2 * Reduction + CoreRelease;
 
-      der(core) = 2 * Mineralization + 4 * Nucleation - CoreRelease;
+
+      der(LIP) = -2 * Oxidation + 2 * Reduction + CoreRelease
+        +Fe_total_need*k_Fe_total_set_achieve_time*Fract_LIP;
+
+
+      der(core) = 2 * Mineralization + 4 * Nucleation - CoreRelease
+        + Fe_total_need*k_Fe_total_set_achieve_time*Fract_Fe_in_Ft;
+
 
       der(DFP) = Oxidation - Mineralization - Reduction - 2 * Nucleation;
 
@@ -1263,7 +1270,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
     model Test_FT_storage
         extends Modelica.Icons.Example;
       Bodylight.Types.Constants.ConcentrationConst Fe_total(k(displayUnit=
-              "mol/l") = 0.017499704)
+              "mmol/l") = 0.0038)
         annotation (Placement(transformation(extent={{-94,70},{-86,78}})));
       Bodylight.Types.Constants.ConcentrationConst FT_cage(k(displayUnit=
               "mmol/l") = 1.33125e-05)
@@ -1334,7 +1341,9 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
       parameter Modelica.Units.SI.Frequency k_cat_IRPs_Activation = 4.63671e-6;
     equation
       FT_Degradation = k_FT_Degradation * FT_cage;
-      FT_Expression = k_cat_FT_Expression * (1 - IRPs_active ^ n_FT_Expression / (K_FT_Expression ^ n_FT_Expression + IRPs_active ^ n_FT_Expression));
+      FT_Expression = k_cat_FT_Expression * (1 -
+        IRPs_active ^ n_FT_Expression
+        / (K_FT_Expression ^ n_FT_Expression + IRPs_active ^ n_FT_Expression));
       IRPs_Activation = k_cat_IRPs_Activation * IRPs_inactive;
       IRPs_Degradation = k_cat_IRPs_Degradation * IRPs_active * LIP;
 
@@ -1378,7 +1387,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
     model Test_FT_cageRegulation
         extends Modelica.Icons.Example;
       Bodylight.Types.Constants.ConcentrationConst Fe_total(k(displayUnit=
-              "mol/l") = 0.017499704)
+              "mmol/l") = 0.00380474)
         annotation (Placement(transformation(extent={{-94,70},{-86,78}})));
       FerritinIronStorage ferritinIronStorage
         annotation (Placement(transformation(extent={{-24,-4},{32,52}})));
@@ -1389,16 +1398,14 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
         annotation (Placement(transformation(extent={{-86,-32},{-78,-24}})));
       Bodylight.Types.Constants.ConcentrationConst FT_cage_in(k(displayUnit=
               "mol/l") = 2.375189822e-06)
-        annotation (Placement(transformation(extent={{-90,16},{-82,24}})));
+        annotation (Placement(transformation(extent={{-92,20},{-84,28}})));
     equation
       connect(Fe_total.y, ferritinIronStorage.Fe_total_set) annotation (Line(
             points={{-85,74},{-36,74},{-36,43.6},{-25.68,43.6}}, color={0,0,127}));
-      connect(fT_cage_regulation.FT_cage, ferritinIronStorage.FT_cage)
-        annotation (Line(points={{-3.28,-51.4},{20,-51.4},{20,-20},{-56,-20},{
-              -56,24},{-25.68,24}}, color={0,0,127}));
-      connect(ferritinIronStorage.LIP, fT_cage_regulation.LIP) annotation (Line(
-            points={{34.8,35.76},{60,35.76},{60,-92},{-64,-92},{-64,-52.84},{
-              -40.72,-52.84}}, color={0,0,127}));
+      connect(FT_cage_in.y, ferritinIronStorage.FT_cage)
+        annotation (Line(points={{-83,24},{-25.68,24}}, color={0,0,127}));
+      connect(LIP_in.y, fT_cage_regulation.LIP) annotation (Line(points={{-77,
+              -28},{-50,-28},{-50,-52.84},{-40.72,-52.84}}, color={0,0,127}));
       annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end Test_FT_cageRegulation;
