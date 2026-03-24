@@ -1094,7 +1094,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
 
       Bodylight.Types.Concentration core(
         start = 7.5e-06 * 1e3) "core";
-      Bodylight.Types.Concentration DFP(
+      Bodylight.Types.Concentration DFPF(
         start = 0) "diferric peroxo complex";
       //Bodylight.Types.Concentration FT_cage;
 
@@ -1448,79 +1448,80 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
 
       //cell
 
-      Modelica.Units.SI.MolarConcentration FT_cage(
+
+      Bodylight.Types.Concentration FT_cage(
         displayUnit = "mol/L",
         start = 2.375189822e-9 * 1e3) "FT-cage";
-      Modelica.Units.SI.MolarConcentration core(
+      Bodylight.Types.Concentration core(
         displayUnit = "mol/L",
         start = 3.682217017e-6 * 1e3) "core";
-      Modelica.Units.SI.MolarConcentration DFP(
+      Bodylight.Types.Concentration DFP(
         displayUnit = "mol/L",
         start = 1.344769304e-10 * 1e3) "diferric peroxo complex";
-      Modelica.Units.SI.MolarConcentration LIP(
+      Bodylight.Types.Concentration LIP(
         displayUnit = "mol/L",
         start = 1.223884748e-7 * 1e3) "labile iron pool";
-      Modelica.Units.SI.MolarConcentration IRPs_active(
+      Bodylight.Types.Concentration IRPs_active(
         displayUnit = "mol/L",
         start = 6.889335935e-11 * 1e3) "iron regulatory proteins (active)";
-      Modelica.Units.SI.MolarConcentration IRPs_inactive(
+      Bodylight.Types.Concentration IRPs_inactive(
         displayUnit = "mol/L",
         start = 7.264345126e-12 * 1e3) "iron regulatory proteins (inactive)";
 
       //Reactions
 
       //FT expression ( -> FT-cage;  IRPs_active)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Expression;
-      EnterocyteMucosalBlock.types.AmountRatePerVolume k_cat_FT_Expression=
+      BodylightExtension.Types.MolarReactionRate FT_Expression;
+      BodylightExtension.Types.MolarReactionRate k_cat_FT_Expression=
           7.68e-14*1e3;
       parameter Integer n_FT_Expression = 1;
-      parameter Modelica.Units.SI.MolarConcentration K_FT_Expression(
+      parameter Bodylight.Types.Concentration K_FT_Expression(
         displayUnit = "mol/L") = 1.4e-11 * 1e3;
 
       //FT degradation (FT-cage -> )
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Degradation;
-      parameter Modelica.Units.SI.Frequency k_FT_Degradation = 5.461499585e-6;
+      BodylightExtension.Types.MolarReactionRate FT_Degradation;
+      parameter Bodylight.Types.Frequency k_FT_Degradation = 5.461499585e-6;
 
       //FT degradation core release (core -> LIP; FT-cage core)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume
+      BodylightExtension.Types.MolarReactionRate
         FT_Degradation_Core_Release;
 
       //FT Fe oxidation (2 * LIP -> DFP; FT-cage)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Fe_Oxidation;
-      parameter Modelica.Units.SI.Frequency k_cat_FT_Fe_Oxidation = 591;
-      parameter Modelica.Units.SI.MolarConcentration K_m_FT_Fe_Oxidation(
+      BodylightExtension.Types.MolarReactionRate FT_Fe_Oxidation;
+      parameter Bodylight.Types.Frequency k_cat_FT_Fe_Oxidation = 591;
+      parameter Bodylight.Types.Concentration K_m_FT_Fe_Oxidation(
         displayUnit = "mol/L") = 0.35e-3 * 1e3;
       parameter Real n_FT_Fe_Oxidation = 1.3;
 
       //FT Fe Reduction (DFP -> 2 * LIP)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Fe_Reduction;
-      parameter Modelica.Units.SI.Frequency k_FT_Fe_Reduction = 0.2605;
+      BodylightExtension.Types.MolarReactionRate FT_Fe_Reduction;
+      parameter Bodylight.Types.Frequency k_FT_Fe_Reduction = 0.2605;
 
       //FT Nucleation (2 * DFP -> 4 * core; FT-cage core)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Nucleation;
-      parameter Modelica.Units.SI.Frequency k_cat_FT_Nucleation = 5e7;
-      parameter Modelica.Units.SI.MolarConcentration K_i_FT_Nucleation(
+      BodylightExtension.Types.MolarReactionRate FT_Nucleation;
+      parameter Bodylight.Types.Frequency k_cat_FT_Nucleation = 5e7;
+      parameter Bodylight.Types.Concentration K_i_FT_Nucleation(
         displayUnit = "mol/L") = 0.461598e-3 * 1e3;
       parameter Integer n_FT_Nucleation = 4;
 
       //FT core formation (Mineralization) (DFP -> 2 * core; core)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume FT_Core_Formation;
-      parameter Modelica.Units.SI.Frequency k_cat_FT_Core_Formation = 0.101564;
-      parameter Modelica.Units.SI.MolarConcentration K_m_FT_Core_Formation(
+      BodylightExtension.Types.MolarReactionRate FT_Core_Formation;
+      parameter Bodylight.Types.Frequency k_cat_FT_Core_Formation = 0.101564;
+      parameter Bodylight.Types.Concentration K_m_FT_Core_Formation(
         displayUnit = "mol/L") = 5e-06 * 1e3;
-      parameter Modelica.Units.SI.MolarConcentration K_i_FT_Core_Formation(
+      parameter Bodylight.Types.Concentration K_i_FT_Core_Formation(
         displayUnit = "mol/L") = 4.6458e-3 * 1e3;
       parameter Integer n_FT_Core_Formation = 4;
       parameter Integer m_FT_Core_Formation = 8;
 
       //IRPs degradation (IRPs_active -> IRPs_inactive;  LIP)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume IRPs_Degradation;
+      BodylightExtension.Types.MolarReactionRate IRPs_Degradation;
       parameter EnterocyteMucosalBlock.types.SecondOrderRateConstant
         k_cat_IRPs_Degradation=3.99474*1e-3;
 
       //IRPs activation (IRPs_inactive -> IRPs_active)
-      EnterocyteMucosalBlock.types.AmountRatePerVolume IRPs_Activation;
-      parameter Modelica.Units.SI.Frequency k_cat_IRPs_Activation = 4.63671e-6;
+      BodylightExtension.Types.MolarReactionRate IRPs_Activation;
+      parameter Bodylight.Types.Frequency k_cat_IRPs_Activation = 4.63671e-6;
 
       //added parameter
       parameter Bodylight.Types.Frequency k_Fe_total_set_achieve_time=1e-2;
