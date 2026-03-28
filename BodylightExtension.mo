@@ -1,7 +1,40 @@
 within ;
 package BodylightExtension
   package Types
-    type MolarReactionRate = Real( quantity="MolarReactionRate", unit = "mol/(m3.s)",displayUnit = "mmol/(l.s)");
+    type MolarReactionRate = Real(
+      quantity="MolarReactionRate",
+      unit = "mol/(m3.s)",
+      displayUnit = "mmol/(l.s)"
+      );
+    type MolarFluxPerArea = Real(
+      quantity    = "MolarFluxPerArea",
+      unit        = "mol/(m2.s)",
+      displayUnit = "mol/(cm2.s)"
+      );
+    type SurfaceConcentration = Real(
+      quantity="SurfaceConcentration",
+      unit="mol/m2",
+      displayUnit="mol/cm2"
+      );
+    type DiffusionCoefficient= Real(
+      quantity    = "DiffusionCoefficient",
+      unit        = "m2/s",
+      displayUnit = "cm2/s"
+      );
+    type ReactionRateFirstOrder = Real(
+      quantity    = "ReactionRateFirstOrder",
+      unit        = "1/s"
+      );
+    type ReactionRateSecondOrder = Real(
+      quantity    = "ReactionRateSecondOrder",
+      unit        = "m3/(mol.s)",
+      displayUnit = "l/(mol.s)"
+      );
+    type ReactionRateThirdOrder = Real(
+      quantity    = "ReactionRateThirdOrder",
+      unit        = "m6/(mol2.s)",
+      displayUnit = "l2/(mol2.s)"
+      );
     package RealIO
       connector MolarReactionRateInput = input MolarReactionRate
       "input MolarReactionRate as connector"
@@ -90,6 +123,7 @@ package BodylightExtension
                       textString="Const")}));
     end MolarFlowRateConst;
     end Constants;
+
   end Types;
   annotation (uses(Bodylight(version="1.0")));
 end BodylightExtension;
