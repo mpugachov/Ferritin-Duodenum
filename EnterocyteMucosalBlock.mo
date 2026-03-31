@@ -1026,7 +1026,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
         start = 1.344769304e-10 * 1e3) "diferric peroxo complex";
       Bodylight.Types.Concentration LIP(
         displayUnit = "mol/L",
-        start = 1.223884748e-7 * 1e3) "labile iron pool";
+        start = 1.2239676e-7 * 1e3) "labile iron pool";
       Bodylight.Types.Concentration IRPs_active(
         displayUnit = "mol/L",
         start = 6.889335935e-11 * 1e3) "iron regulatory proteins (active)";
@@ -1296,7 +1296,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
 
       Bodylight.Types.Concentration Fe_total;
       Bodylight.Types.Concentration Fe_total_need=Fe_total_set - Fe_total;
-      Bodylight.Types.RealIO.ConcentrationOutput LIP(start = 6.15243e-7 * 1e3) annotation (Placement(
+      Bodylight.Types.RealIO.ConcentrationOutput LIP(start = 1.2239676e-7 * 1e3) annotation (Placement(
             transformation(extent={{112,16},{132,36}}),   iconTransformation(extent
           ={{100,32},{120,52}})));
       Bodylight.Types.RealIO.ConcentrationOutput Fe_in_FT annotation (Placement(
@@ -1382,53 +1382,39 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
               fillColor={255,255,0},
               fillPattern=FillPattern.Solid),
             Text(
-              extent={{54,70},{94,60}},
+              extent={{38,70},{94,60}},
               textColor={28,108,200},
-              textString="Fe_in_FT"),
+              textString="Fe_in_FT",
+              horizontalAlignment=TextAlignment.Right),
             Text(
-              extent={{42,44},{82,34}},
+              extent={{32,44},{94,34}},
               textColor={28,108,200},
-              textString="LIP"),
+              textString="LIP",
+              horizontalAlignment=TextAlignment.Right),
             Text(
-              extent={{58,-18},{88,-24}},
+              extent={{4,-22},{90,-32}},
               textColor={28,108,200},
-              textString="Fract_Fe_inFt"),
+              textString="Fract_Fe_inFt",
+              horizontalAlignment=TextAlignment.Right),
             Text(
-              extent={{58,-50},{80,-62}},
+              extent={{26,-56},{92,-68}},
               textColor={28,108,200},
-              textString="Fract_LIP1"),
+              textString="Fract_LIP1",
+              horizontalAlignment=TextAlignment.Right),
             Text(
-              extent={{-80,44},{-46,8}},
+              extent={{-86,30},{22,16}},
               textColor={28,108,200},
-              textString="Fe_total"),
+              textString="Fe_total",
+              horizontalAlignment=TextAlignment.Left),
             Text(
-              extent={{-82,-22},{-22,-48}},
+              extent={{-90,-28},{14,-40}},
               textColor={28,108,200},
+              horizontalAlignment=TextAlignment.Left,
               textString="Fe_total_fract")}),                        Diagram(
             coordinateSystem(preserveAspectRatio=false)));
     end FerritinCageBlockShortModel_withOutputs;
 
     model Test_FerritinCageBlockShortModel_withOutputs
-        extends Modelica.Icons.Example;
-      Bodylight.Types.Constants.ConcentrationConst Fe_total(k(displayUnit=
-              "mmol/l") = 0.0380474)
-        annotation (Placement(transformation(extent={{-92,24},{-84,32}})));
-      FerritinCageBlockShortModel_withOutputs
-        ferritinCageBlockShortModel_withOutputs
-        annotation (Placement(transformation(extent={{-44,-32},{56,66}})));
-    equation
-      connect(Fe_total.y, ferritinCageBlockShortModel_withOutputs.Fe_total_set)
-        annotation (Line(points={{-83,28},{-64.5,28},{-64.5,28.76},{-46,28.76}},
-            color={0,0,127}));
-      annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-            coordinateSystem(preserveAspectRatio=false)),
-        experiment(
-          StopTime=4000000,
-          __Dymola_NumberOfIntervals=5000,
-          __Dymola_Algorithm="Dassl"));
-    end Test_FerritinCageBlockShortModel_withOutputs;
-
-    model Test_FerritinCageBlockShortModel_withOutputs_k
         extends Modelica.Icons.Example;
       Bodylight.Types.Constants.ConcentrationConst Fe_total(k(displayUnit=
               "mmol/l") = 0.00380474)
@@ -1451,7 +1437,7 @@ package EnterocyteMucosalBlock "Enterocyte mucosal block"
           StopTime=4000000,
           __Dymola_NumberOfIntervals=5000,
           __Dymola_Algorithm="Dassl"));
-    end Test_FerritinCageBlockShortModel_withOutputs_k;
+    end Test_FerritinCageBlockShortModel_withOutputs;
   end models;
   annotation (uses(Modelica(version="4.0.0"), Bodylight(version="1.0")));
 end EnterocyteMucosalBlock;
